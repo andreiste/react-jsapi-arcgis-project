@@ -9,7 +9,6 @@ class WebMapView extends React.Component {
   }
 
   componentDidMount() {
-    // lazy load the required ArcGIS API for JavaScript modules and CSS
     loadModules(['esri/Map', 'esri/views/MapView'], { css: true })
     .then(([ArcGISMap, MapView]) => {
       const map = new ArcGISMap({
@@ -19,8 +18,8 @@ class WebMapView extends React.Component {
       this.view = new MapView({
         container: this.mapRef.current,
         map: map,
-        center: [-118, 34],
-        zoom: 8
+        center: [26.096306,44.439663],
+        zoom: 11
       });
     });
   }
