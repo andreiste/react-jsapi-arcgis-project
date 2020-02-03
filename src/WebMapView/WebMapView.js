@@ -7,6 +7,7 @@ class WebMapView extends React.Component {
   constructor(props) {
     super(props);
     this.mapRef = React.createRef();
+    this.sliderRef = React.createRef();
   }
 
   componentDidMount() {
@@ -19,7 +20,6 @@ class WebMapView extends React.Component {
         imageFormat: "png32",
         refreshInterval: 3, 
         useViewTime: true,
-        popupEnabled: true,
         sublayers: [{
           id: 0,
           source: {
@@ -40,12 +40,6 @@ class WebMapView extends React.Component {
           }
         },{
           id: 3,
-          source: {
-            type: "map-layer",
-            mapLayerId: 22
-          }
-        },{
-          id: 4,
           source: {
             type: "map-layer",
             mapLayerId: 23
@@ -70,13 +64,21 @@ class WebMapView extends React.Component {
         layerInfos: [
           {
             layer: trafficLayer,
-            title: "Legenda",
+            title: "Legendă",
           }
         ],
         style: "card"
       });
 
-      this.view.ui.add(legend,"bottom-right");
+      const legendExpand = new Expand({
+        expandIconClass: "esri-icon-collection",
+        expandTooltip: "Legenda",
+        view: this.view,
+        content: legend,
+        expanded: false
+      });
+
+      this.view.ui.add(legendExpand,"top-left");
 
       const scaleBar = new Scalebar({
         view: this.view,
@@ -89,8 +91,14 @@ class WebMapView extends React.Component {
       })
 
       const timeSlider = new TimeSlider({
+        container: this.sliderRef.current,
         mode: "time-window",
-        view: this.view
+        view: this.view,
+        values: [
+          new Date()
+        ],
+        loop: true,
+        timeVisible: true
       })
 
       this.view.ui.add(timeSlider,"manual");
@@ -98,7 +106,6 @@ class WebMapView extends React.Component {
       this.view.whenLayerView(trafficLayer).then(function(lv) {
         const fullTimeExtent = trafficLayer.timeInfo.fullTimeExtent;
 
-        // set up time slider properties
         timeSlider.fullTimeExtent = fullTimeExtent;
         timeSlider.stops = {
           interval: trafficLayer.timeInfo.interval
@@ -116,7 +123,10 @@ class WebMapView extends React.Component {
 
   render() {
     return (
-      <div className="webmap" ref={this.mapRef} />
+      <body>
+        <div className="webmap" ref={this.mapRef} />
+        <div className="container" ref={this.sliderRef}/>
+      </body>
     );
   }
 }
