@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Collapse, Nav, Navbar, NavbarToggler, NavItem, NavLink, NavbarBrand } from 'reactstrap';
+import { Collapse, Nav, Navbar, NavbarToggler, NavItem, NavLink, NavbarBrand, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
 import logo from '../react-logo.svg';
 import './AppNavbar.css';
 
@@ -18,9 +18,7 @@ class AppNavbar extends Component {
 
   render() {
     return <Navbar className="reactstrap-nav" dark expand='md'>
-      <NavbarToggler onClick={this.toggle}/>
-      <Collapse isOpen={this.state.isOpen} navbar>
-        <NavbarBrand href="https://developers.arcgis.com/javascript/">
+      <NavbarBrand>
           <img
             src = {logo}
             alt=""
@@ -28,8 +26,23 @@ class AppNavbar extends Component {
             height="40"
             className="react-logo"
           />
-         {' '}
-          Javascript API for ArcGIS</NavbarBrand>
+         {' '} React Javascript API for ArcGIS Demo
+      </NavbarBrand>
+      <NavbarToggler onClick={this.toggle}/>
+      <Collapse isOpen={this.state.isOpen} navbar>
+        <UncontrolledDropdown inNavbar>
+          <DropdownToggle caret>
+              Documentation
+          </DropdownToggle>
+          <DropdownMenu right>
+            <DropdownItem href="https://reactjs.org/docs/getting-started.html">
+              React Documentation
+            </DropdownItem>
+            <DropdownItem href="https://developers.arcgis.com/javascript/">
+              Javascript API for ArcGIS Documentation
+            </DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
         <Nav className="ml-auto" navbar>
           <NavItem>
             <NavLink
