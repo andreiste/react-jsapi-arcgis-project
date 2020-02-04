@@ -11,8 +11,8 @@ class WebMapView extends React.Component {
   }
 
   componentDidMount() {
-    loadModules(['esri/Map', 'esri/layers/MapImageLayer','esri/views/MapView',"esri/widgets/Legend", "esri/widgets/ScaleBar","esri/widgets/TimeSlider","esri/widgets/Expand"], { css: true })
-    .then(([ArcGISMap, MapImageLayer, MapView, Legend, Scalebar,TimeSlider,Expand]) => {
+    loadModules(['esri/Map', 'esri/layers/MapImageLayer','esri/views/MapView',"esri/widgets/Legend", "esri/widgets/ScaleBar","esri/widgets/TimeSlider","esri/widgets/Expand","esri/TimeExtent"], { css: true })
+    .then(([ArcGISMap, MapImageLayer, MapView, Legend, Scalebar,TimeSlider,Expand,TimeExtent]) => {
 
       const trafficLayer = new MapImageLayer({
         url: "https://utility.arcgis.com/usrsvcs/appservices/HGUdCnGhABOZFpsG/rest/services/World/Traffic/MapServer",
@@ -90,12 +90,16 @@ class WebMapView extends React.Component {
         position: "bottom-left",
       })
 
+      const date = new Date();
+      const date_earlier = new Date();
+      date_earlier.setDate(date.getDate()-1);
+
       const timeSlider = new TimeSlider({
         container: this.sliderRef.current,
         mode: "time-window",
         view: this.view,
         values: [
-          new Date()
+          date
         ],
         loop: true,
         timeVisible: true
@@ -104,11 +108,18 @@ class WebMapView extends React.Component {
       this.view.ui.add(timeSlider,"manual");
 
       this.view.whenLayerView(trafficLayer).then(function(lv) {
-        const fullTimeExtent = trafficLayer.timeInfo.fullTimeExtent;
+        const fullTimeExtent = new TimeExtent({
+          start: date_earlier,
+          end: date
 
+        })
         timeSlider.fullTimeExtent = fullTimeExtent;
         timeSlider.stops = {
-          interval: trafficLayer.timeInfo.interval
+          interval:{
+            value: 15,
+            unit: "minutes"
+          }
+          
         };
       });
 
@@ -123,10 +134,10 @@ class WebMapView extends React.Component {
 
   render() {
     return (
-      <body>
+      <div>
         <div className="webmap" ref={this.mapRef} />
         <div className="container" ref={this.sliderRef}/>
-      </body>
+      </div>
     );
   }
 }
