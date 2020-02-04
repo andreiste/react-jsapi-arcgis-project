@@ -70,9 +70,10 @@ class WebMapView extends React.Component {
         style: "card"
       });
 
+
       const legendExpand = new Expand({
-        expandIconClass: "esri-icon-collection",
-        expandTooltip: "Legenda",
+        expandIconClass: "esri-icon-layers",
+        expandTooltip: "Legendă",
         view: this.view,
         content: legend,
         expanded: false
@@ -119,7 +120,6 @@ class WebMapView extends React.Component {
             value: 15,
             unit: "minutes"
           }
-          
         };
       });
 

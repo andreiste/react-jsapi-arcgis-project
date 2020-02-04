@@ -26,20 +26,23 @@ class AppNavbar extends Component {
             height="40"
             className="react-logo"
           />
-         {' '} React Javascript API for ArcGIS Demo
+         {' '} Traficul din București
       </NavbarBrand>
       <NavbarToggler onClick={this.toggle}/>
       <Collapse isOpen={this.state.isOpen} navbar>
-        <UncontrolledDropdown inNavbar>
-          <DropdownToggle caret>
-              Documentation
+        <UncontrolledDropdown>
+          <DropdownToggle caret outline color="secondary">
+              Documentație
           </DropdownToggle>
           <DropdownMenu right>
-            <DropdownItem href="https://reactjs.org/docs/getting-started.html">
-              React Documentation
-            </DropdownItem>
             <DropdownItem href="https://developers.arcgis.com/javascript/">
-              Javascript API for ArcGIS Documentation
+              Javascript API for ArcGIS
+            </DropdownItem>
+            <DropdownItem href="https://www.arcgis.com/home/item.html?id=ff11eb5b930b4fabba15c47feb130de4">
+              World Traffic Service
+            </DropdownItem>
+            <DropdownItem href="https://reactjs.org/docs/getting-started.html">
+              React
             </DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>

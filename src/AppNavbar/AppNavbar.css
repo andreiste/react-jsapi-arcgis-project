@@ -2,6 +2,7 @@
     background-color: #553D67;
 }
 
+
 @media (prefers-reduced-motion: no-preference) {
     .react-logo {
         animation: react-logo-spin infinite 20s linear;
