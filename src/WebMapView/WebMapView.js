@@ -70,26 +70,24 @@ class WebMapView extends React.Component {
         style: "card"
       });
 
-
-      const legendExpand = new Expand({
-        expandIconClass: "esri-icon-layers",
-        expandTooltip: "Legendă",
-        view: this.view,
-        content: legend,
-        expanded: false
-      });
-
-      this.view.ui.add(legendExpand,"top-left");
-
       const scaleBar = new Scalebar({
         view: this.view,
         style: "line",
         unit: "metric"
       })
 
-      this.view.ui.add(scaleBar,{
-        position: "bottom-left",
-      })
+      this.view.ui.add(scaleBar,"bottom-left");
+
+      const legendExpand = new Expand({
+        expandIconClass: "esri-icon-layers",
+        expandTooltip: "Legendă",
+        view: this.view,
+        content: legend,
+        mode: "floating",
+        expanded: false,
+      });
+
+      this.view.ui.add(legendExpand,"top-left");
 
       const date = new Date();
       const date_earlier = new Date();
@@ -106,7 +104,7 @@ class WebMapView extends React.Component {
         timeVisible: true
       })
 
-      this.view.ui.add(timeSlider,"manual");
+      this.view.ui.add(timeSlider,"bottom");
 
       this.view.whenLayerView(trafficLayer).then(function(lv) {
         const fullTimeExtent = new TimeExtent({
@@ -123,7 +121,12 @@ class WebMapView extends React.Component {
         };
       });
 
-    });
+
+      this.view.watch("width",function(width){
+        console.log(width);
+      })
+  })
+      
   }
 
   componentWillUnmount() {
@@ -136,7 +139,7 @@ class WebMapView extends React.Component {
     return (
       <div>
         <div className="webmap" ref={this.mapRef} />
-        <div className="container" ref={this.sliderRef}/>
+        <div ref={this.sliderRef}/>
       </div>
     );
   }
