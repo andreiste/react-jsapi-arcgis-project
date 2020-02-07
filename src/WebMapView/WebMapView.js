@@ -120,13 +120,7 @@ class WebMapView extends React.Component {
           }
         };
       });
-
-
-      this.view.watch("width",function(width){
-        console.log(width);
-      })
-  })
-      
+    })     
   }
 
   componentWillUnmount() {

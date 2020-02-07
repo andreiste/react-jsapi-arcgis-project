@@ -1,0 +1,12 @@
+.bottom-container{
+    background-color: #353a41;
+    padding-top: 12px;
+    padding-left: 15px;
+    overflow: auto;
+}
+
+.text-secondary{
+    font-size: medium;
+    font-weight: bold;
+    font-style: italic;
+}
